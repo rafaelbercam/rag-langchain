@@ -1,0 +1,47 @@
+O que é RAG (Retrieval-Augmented Generation)?
+
+RAG é uma abordagem de processamento de linguagem natural que combina um modelo de recuperação de informação com um modelo de geração de texto. A ideia central é que, em vez de gerar respostas apenas com base no conhecimento treinado do modelo, o sistema primeiro recupera documentos relevantes de um corpus de dados e depois usa esses documentos para informar a geração da resposta.
+
+Como funciona o RAG?
+
+O processo do RAG ocorre em várias etapas principais. Primeiro, a consulta do usuário é convertida em uma representação vetorial através de embeddings. Em seguida, essa representação é comparada com os embeddings dos documentos armazenados em um banco de dados vetorial (como FAISS). Os documentos mais similares são recuperados. Finalmente, esses documentos recuperados são passados como contexto para um modelo de linguagem grande (como GPT) que gera uma resposta baseada no contexto fornecido.
+
+Vantagens do RAG
+
+RAG oferece várias vantagens em relação aos modelos de linguagem tradicionais. Primeiro, permite que o sistema acesse informações mais recentes que não estão incluídas nos dados de treinamento do modelo. Segundo, reduz as "alucinações" do modelo, pois a resposta é baseada em documentos reais. Terceiro, fornece rastreabilidade - você pode ver quais documentos foram usados para gerar a resposta. Quarto, é mais econômico que retreinar um grande modelo de linguagem com novos dados.
+
+Implementação com LangChain
+
+LangChain é um framework Python que facilita a implementação de aplicações RAG. Ele fornece componentes prontos para carregamento de documentos, criação de embeddings, gerenciamento de vector stores, e composição de chains. Com LangChain, você pode construir uma aplicação RAG completa em poucas linhas de código, abstraindo muitos dos detalhes complexos.
+
+Vector Stores e FAISS
+
+Um vector store é um banco de dados especializado para armazenar e recuperar vetores de alta dimensão. FAISS (Facebook AI Similarity Search) é uma biblioteca de código aberto que fornece algoritmos eficientes para busca de similaridade em espaços de alta dimensão. Ele permite recuperação rápida de documentos similares, mesmo com milhões de vetores.
+
+Embeddings e OpenAI
+
+Embeddings são representações vetoriais de texto que capturam o significado semântico. A OpenAI oferece modelos de embedding como "text-embedding-3-large" que geram vetores de alta qualidade. Esses embeddings são essenciais para o RAG, pois permitem comparar semanticamente diferentes textos e encontrar documentos relevantes.
+
+Processamento de Documentos
+
+Antes de usar os documentos em um sistema RAG, eles geralmente precisam ser processados. Isso inclui dividir documentos grandes em chunks menores (para caber nos tokens do modelo), normalizar o texto, e adicionar metadados como fonte e data. LangChain fornece ferramentas como CharacterTextSplitter para realizar essas tarefas.
+
+Chains em LangChain
+
+Um chain em LangChain é uma sequência de componentes ligados entre si. Por exemplo, um RetrievalQA chain conecta um retriever (que busca documentos) a um modelo de linguagem (que gera a resposta). ConversationalRetrievalChain adiciona memória para manter o histórico da conversa, permitindo que o modelo considere mensagens anteriores.
+
+Aplicações do RAG
+
+RAG tem muitas aplicações práticas. Pode ser usado para criar sistemas de suporte ao cliente inteligentes que consultam uma base de conhecimento. Pode alimentar assistentes de pesquisa que resumem informações de múltiplas fontes. Pode ser usado em análise de contratos ou documentos legais, onde a precisão é crítica. Também pode ser aplicado em educação, para criar tutores inteligentes que explicam conceitos com base em materiais de curso.
+
+Desafios e Limitações
+
+Apesar dos benefícios, o RAG apresenta alguns desafios. A qualidade dos resultados depende fortemente da qualidade dos documentos recuperados. Se o corpus não contém a informação necessária, o RAG não poderá ajudar. Há também questões de latência - buscar documentos e gerar respostas leva tempo. Além disso, há custos associados com chamadas à API de embedding e ao modelo de linguagem.
+
+Otimizações e Melhorias
+
+Existem várias técnicas para melhorar o desempenho do RAG. Query reformulation permite que o sistema reescreva a pergunta do usuário em múltiplas variantes para recuperar documentos mais relevantes. Reranking utiliza um modelo adicional para classificar os documentos recuperados por relevância. Semantic caching pode armazenar resultados de queries anteriores para evitar cálculos redundantes. Feedback loops permitem que o sistema aprenda com o tempo quais documentos são mais úteis.
+
+Futuro do RAG
+
+O RAG provavelmente continuará evoluindo. Com o desenvolvimento de modelos menores mas mais eficientes, pode ser possível executar RAG localmente. A integração com mais fontes de dados estruturadas (bancos de dados, APIs) expandirá os casos de uso. A combinação de RAG com outras técnicas como busca web em tempo real criará sistemas ainda mais poderosos e informados.
